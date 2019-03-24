@@ -49,6 +49,14 @@ func main() {
 				return nil
 			},
 		},
+		{
+			Name:  "conf",
+			Usage: "Used to read a configuration vile, and check it for errors",
+			Action: func(c *cli.Context) error {
+				runConf(app)
+				return nil
+			},
+		},
 	}
 
 	app.Action = func(c *cli.Context) error {
@@ -60,6 +68,10 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func runConf(app *cli.App) {
+	fmt.Println("reading confings!")
 }
 
 func runCode(app *cli.App) {
@@ -85,8 +97,11 @@ func runCode(app *cli.App) {
 	}
 
 	for _, f := range files {
+		//executor.ReadConf(p, f.Name())
 		runFile(p, f.Name(), responses)
 	}
+
+	executor.GenerateTemplate(p, "test.xml")
 }
 
 func runFile(path, filename string, responses []string) {
